@@ -22,8 +22,8 @@
     background-color: rgb(0, 0, 0);
     padding: 0px;
     border-width: 50%;
-    background
-    
+        
+  
   }
   img {
     padding: 0%;
@@ -52,13 +52,15 @@ background-color: black;
  }
 
  #ii {
-  background-color: lightgrey;
+  background-color: rgb(217, 228, 235);
   
   
    }
 
 h3 {
    text-align: center;
+   background-color: black;
+   color:white;
  }
  
  mark {
