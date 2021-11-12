@@ -1062,7 +1062,7 @@ section {
   padding-top: 5px;
   text-align: center;
   font-size: 13px;
-  color: #eaebf0;
+  color: #eaebf0; 
 }
 
 @media (max-width: 1199px) {
@@ -1072,3 +1072,26 @@ section {
     padding-right: 20px 15px;
   }
 }
+
+.swiper-slide:hover {
+  background: rgb(8, 225, 253);
+}
+
+.hss:hover {
+
+  background: rgb(45, 93, 252);
+  opacity: 75%;
+
+}
+
+
+a[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  margin-top: 50px;
+  size: 100pc;
+  top: -100%;
+  left: 0;
+}
+
+
