@@ -1074,12 +1074,12 @@ section {
 }
 
 .swiper-slide:hover {
-  background: rgb(8, 225, 253);
+  background: rgb(237, 253, 8);
 }
 
 .hss:hover {
 
-  background: rgb(45, 93, 252);
+  background: rgb(214, 252, 45);
   opacity: 75%;
 
 }
