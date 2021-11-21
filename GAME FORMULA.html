@@ -14261,13 +14261,24 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Samsung-Data-Transformation">Samsung Data Transformation<a class="anchor-link" href="#Samsung-Data-Transformation">&#182;</a></h1>
 </div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Epiqvision held a virtual reality event developed to the specifications given out by the client, in this case SAMSUNG. This event took place over a six day period. Over the course of these six days, users were asked to play a variety of games. Data was collected to document everything that happened, including individual results for each game.</p>
+<p>When the event was over, json files were pulled from the platform and then converted into csv files for further transformations.</p>
+<p>Data collected included the Leaderboard (a collection of all scores for each player ranking them from highest to lowest), and the actual game results showing who played what games and their respective scores. The software used to transform and analyze this data include excel &amp; jupyter notebook.</p>
+<p>Keeping in mind the client’s (SAMSUNG) wishes, the files were transformed to reflect a more focused dataset shown in the RESULTS folder.</p>
+<p>Setbacks - data for the first 5 days was collected together but the 6th day had been collected separately, requiring an unconventional merge for both Leaderboard and Game results.</p>
+
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[72]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dependecies </span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
 </pre></div>
 
@@ -14282,8 +14293,10 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[73]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data source/CSV/monday-results.csv&#39;</span><span class="p">)</span>
-<span class="c1">#pd.set_option(&#39;display.max_rows&#39;, 100)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#import data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data source/CSV/monday-results.csv&#39;</span><span class="p">)</span>
+
+<span class="c1">#Raw game results</span>
 <span class="n">data</span>
 </pre></div>
 
@@ -14629,7 +14642,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[74]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;ffill&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Method to fill all unfilled areas</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;ffill&quot;</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14837,7 +14851,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[76]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Second aggregation for START TIME &amp; END TIME</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Second aggregation for START TIME &amp; END TIME</span>
 <span class="n">dgroup45</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span> <span class="s2">&quot;NAME&quot;</span><span class="p">,</span> <span class="s1">&#39;User ID&#39;</span><span class="p">,</span>
                         <span class="s2">&quot;Email&quot;</span><span class="p">,</span> <span class="s2">&quot;Room #&quot;</span><span class="p">,</span> <span class="s1">&#39;Rank By Room&#39;</span><span class="p">,</span> 
                         <span class="s1">&#39;User Score&#39;</span><span class="p">])[</span><span class="s1">&#39;Date &amp; Time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -14854,7 +14868,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[77]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># creating a new column to add the TOTAL QUESTIONS</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Creating a new column to add the TOTAL QUESTIONS</span>
 <span class="n">Questions_Per_Room</span> <span class="o">=</span> <span class="p">[]</span>
     
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dgroup45</span><span class="p">[</span><span class="s1">&#39;Room #&#39;</span><span class="p">]:</span>
@@ -14914,12 +14928,12 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[79]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Take created columns from second aggregation </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Take created columns from second aggregation </span>
 <span class="c1"># ****only run once****</span>
 <span class="n">dgroup46</span> <span class="o">=</span> <span class="n">dgroup45</span><span class="p">[[</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]]</span>
 
 
-<span class="c1">#join columns to first aggregation</span>
+<span class="c1">#Join columns to first aggregation</span>
 <span class="n">dgroup4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dgroup4</span><span class="p">,</span> <span class="n">dgroup46</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">dgroup4</span>
@@ -15147,7 +15161,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[80]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Calling PERCENTAGE column &amp; # OF QUESTIONS ANSWERED</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Calling PERCENTAGE column &amp; # OF QUESTIONS ANSWERED</span>
 <span class="n">dgroup5</span> <span class="o">=</span> <span class="n">dgroup4</span><span class="p">[</span><span class="n">dgroup4</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">6</span><span class="p">]]</span>
 <span class="n">dgroup6</span> <span class="o">=</span> <span class="n">dgroup4</span><span class="p">[</span><span class="n">dgroup4</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">7</span><span class="p">]]</span>
 
@@ -15167,7 +15181,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[81]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Adding new columns  TOTAL CORRECT &amp; TOTAL INCORRECT to dataset(agggregation1)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Adding new columns  TOTAL CORRECT &amp; TOTAL INCORRECT to dataset(agggregation1)</span>
 <span class="n">dgroup4</span><span class="p">[</span><span class="s1">&#39;Total Correct&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">trueframe</span>
 <span class="n">dgroup4</span><span class="p">[</span><span class="s1">&#39;Total Incorrect&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">falseframe</span>
 </pre></div>
@@ -15383,7 +15397,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[84]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get column from 3rd aggregation</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Get column from 3rd aggregation</span>
 <span class="c1"># ****only run once****</span>
 <span class="n">UserA</span> <span class="o">=</span> <span class="n">dgroup0</span><span class="p">[</span><span class="s1">&#39;User Answer&#39;</span><span class="p">]</span>
 
@@ -15652,7 +15666,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[85]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Find all negative characters</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Find all negative characters</span>
 
 <span class="c1">#DATA[&#39;Game Status&#39;] = np.where(DATA[&#39;# of Questions Answered&#39;] == DATA[&#39;Questions_Per_Room&#39;], False, True)</span>
 </pre></div>
@@ -15668,11 +15682,12 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[86]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data80</span> <span class="o">=</span> <span class="n">DATA</span><span class="p">[</span><span class="s1">&#39;# of Questions Answered&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Storing individual columns </span>
+<span class="n">data80</span> <span class="o">=</span> <span class="n">DATA</span><span class="p">[</span><span class="s1">&#39;# of Questions Answered&#39;</span><span class="p">]</span>
 <span class="n">data90</span> <span class="o">=</span> <span class="n">DATA</span><span class="p">[</span><span class="s1">&#39;Total Questions Per Room&#39;</span><span class="p">]</span>
 <span class="n">data70</span> <span class="o">=</span>  <span class="n">DATA</span><span class="p">[</span><span class="s1">&#39;Total Correct&#39;</span><span class="p">]</span>
 
-<span class="c1"># Numeric type function allowing you to calculate columns </span>
+<span class="c1">#Numeric type function allowing you to calculate columns </span>
 <span class="n">data80</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">data80</span><span class="p">)</span> 
 <span class="n">data90</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">data90</span><span class="p">)</span>
 <span class="n">data70</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">data70</span><span class="p">)</span>
@@ -15753,7 +15768,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[90]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DATA</span><span class="p">[</span><span class="s1">&#39;Game Status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Varify unique values in column Game Status</span>
+<span class="n">DATA</span><span class="p">[</span><span class="s1">&#39;Game Status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -16091,49 +16107,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DATA</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;monday.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#D = pd.read_csv(&#39;GAMEDATA.CSV&#39;)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">D</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Save newly created dataset into a csv</span>
+<span class="n">DATA</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;monday.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
      </div>
